@@ -1,4 +1,4 @@
-# Private API Gateway and Lambda Authorizer
+# apigatewaylambdaauthorizer
 
 This project creates:
 - API Gateway;
