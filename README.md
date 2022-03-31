@@ -2,11 +2,26 @@
 
 This project creates:
 - A REST API Gateway;
-    - Lambda authorizer enabled;
-- A Lambda function as the authorizer of the API
+    - Authorizer enabled;
+- A Lambda function as authorizer of the API
     - CloudWatch Logs enabled;
-- A Lambda function as the backend of the API
+- A Lambda function as backend of the API
     - CloudWatch Logs enabled;
+
+## How to invoke
+
+```
+curl -v --header "authorizationToken: {token}" https://{restapi_id}.execute-api.{region}.amazonaws.com/{stage_name}/customers
+```
+
+- {token}: authorization token
+    - If token's value is allow, the API will return a success response;
+    - If token's value is deny, the API will return 403 Forbidden;
+    - If you do not send this header, the API will return 401 Unauthorized;
+    - If you send an invalid value, the API will return 500 Internal Server Error;
+- {restapi_id}: it is the API identifier. Find it in API Gateway's console,
+- {region}: is the Region, and
+- {stage_name} is the stage name of the API deployment.
 
 ## Helpful links
 

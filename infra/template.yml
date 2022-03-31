@@ -69,6 +69,14 @@ Resources:
         - Key: Owner
           Value: !Ref Owner
 
+  LambdaAuthorizerPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: LambdaAuthorizer
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt LambdaAuthorizer.Arn
+      Principal: apigateway.amazonaws.com
+
   LambdaBackendExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -108,6 +116,14 @@ Resources:
       Tags:
         - Key: Owner
           Value: !Ref Owner
+
+  LambdaBackendPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: LambdaBackend
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt LambdaBackend.Arn
+      Principal: apigateway.amazonaws.com
 
   RestApi:
     Type: AWS::ApiGateway::RestApi
@@ -166,22 +182,6 @@ Resources:
     Properties:
       RestApiId: !Ref RestApi
       StageName: !Ref StageName
-
-  LambdaAuthorizerPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn: Deployment
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !GetAtt LambdaAuthorizer.Arn
-      Principal: apigateway.amazonaws.com
-
-  LambdaBackendPermission:
-    Type: AWS::Lambda::Permission
-    DependsOn: Deployment
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !GetAtt LambdaBackend.Arn
-      Principal: apigateway.amazonaws.com
 
 Outputs:
   ApiGatewayId:
